@@ -92,7 +92,7 @@
                 android:text="注册"
                 android:textColor="@color/login_text"
                 android:textSize="15sp"
-                android:background=""/>
+                />
 
             <View
                 android:layout_width="0dp"
