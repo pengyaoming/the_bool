@@ -1,6 +1,7 @@
 package com.jxmfkj.www.the_book.view.login;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.jxmfkj.www.the_book.MainActivity;
 import com.jxmfkj.www.the_book.R;
 import com.jxmfkj.www.the_book.db.DataHelper;
+import com.jxmfkj.www.the_book.db.MySp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_forgot;
     @BindView(R.id.tv_register)
     TextView tv_register;
+    private boolean type = false;
 
     @OnClick({R.id.tv_login, R.id.tv_forgot, R.id.tv_register})
     public void onClick(View view) {
@@ -66,10 +69,18 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     dialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    boolean type = true;
+                    Boolean bool = MySp.setType(type, LoginActivity.this);
+                    if (bool) {
+                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "请重新登录", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                 }
             }, 800);
 
@@ -86,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
     private boolean Login(String name, String password) {
         SQLiteDatabase db = dataHelper.getWritableDatabase();
         String sql = "Select * from userData where name = ? and password = ?";
@@ -94,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
             cursor.close();
             return true;
         } else {
-
             return false;
         }
     }
@@ -105,5 +116,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         dataHelper = new DataHelper(this, "UserStore.db", null, 1);
         ButterKnife.bind(this);
+        boolean type = MySp.getType(LoginActivity.this);
+        if (type) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        } else {
+            Toast.makeText(this, "您还未登录", Toast.LENGTH_SHORT).show();
+        }
     }
 }

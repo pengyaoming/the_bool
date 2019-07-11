@@ -10,7 +10,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.jxmfkj.www.the_book.adapter.MyAdapter;
-import com.jxmfkj.www.the_book.view.BookrackFragment;
+import com.jxmfkj.www.the_book.view.BookRackFragment;
 import com.jxmfkj.www.the_book.view.MyFragment;
 import com.jxmfkj.www.the_book.view.StackRoomFragment;
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         titles.add("书库");
         titles.add("我的");
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new BookrackFragment());
+        fragments.add(new BookRackFragment());
         fragments.add(new StackRoomFragment());
         fragments.add(new MyFragment());
         ArrayList<Integer> Icons = new ArrayList<>();

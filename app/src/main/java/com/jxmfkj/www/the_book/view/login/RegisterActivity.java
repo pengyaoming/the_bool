@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-
+    //插入数据
     private boolean register_login(String name, String password) {
         SQLiteDatabase db = dataHelper.getWritableDatabase();
         ContentValues value = new ContentValues();
